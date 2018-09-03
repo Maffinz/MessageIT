@@ -26,13 +26,14 @@ class MyApp(App):
         self.targetNumber = TextInput(multiline=False, hint_text="123 456 7890", write_tab=False)
         self.targetCarrier = TextInput(multiline=False, hint_text="Verizon", write_tab=False)
         self.message = TextInput(multiline=True, hint_text="Message", write_tab=False)
+        self.networkSSID = TextInput(multiline=False, hint_text="Desire Network SSID", write_tab=False)
         self.infoLabel = Label(text="", padding=[100, 100])
 
         #SETUP -> button_grid
         #button_grid Widgets
         self.Load = Button(text="Load", font_size=14)
         self.Load.bind(on_press=self.onLoadClick)
-        self.Done = Button(text="Done", font_size=14)
+        self.Done = Button(text="Save", font_size=14)
         self.Done.bind(on_press=self.onDoneClick)
         self.Clear = Button(text="Clear", font_size=14)
         self.Clear.bind(on_press=self.onClearClick)
@@ -50,6 +51,7 @@ class MyApp(App):
         userInfo.add_widget(self.targetNumber)
         userInfo.add_widget(self.targetCarrier)
         userInfo.add_widget(self.message)
+        userInfo.add_widget(self.networkSSID)
         userInfo.add_widget(self.infoLabel)
 
         #ADDING -> BUTTON_GRID
@@ -71,7 +73,7 @@ class MyApp(App):
         values = Validation().isEmpty(self.mail.text, self.mailPassword.text, self.targetNumber.text, self.targetCarrier.text, self.message.text)
         if values[0]:
             self.infoLabel.text = values[1]
-        elif Validation().carrierExist(self.targetCarrier.text) == False:
+        if Validation().carrierExist(self.targetCarrier.text) == False:
             self.infoLabel.text += "Carrier Does not exis\n"
             self.infoLabel.text += "Here is a list: \n"
             self.infoLabel.text += "Verizon, ATT, Cricket, MetroPCS, Sprint, T-Mobile"
@@ -79,7 +81,9 @@ class MyApp(App):
             self.infoLabel.text = ""
             MyApp.user = User(sender=self.mail.text, target=self.targetNumber.text, message=self.message.text, password=self.mailPassword.text, target_carrier=self.targetCarrier.text)
             MyApp.user.Save()
-        self.onClearClick("None")
+            self.onClearClick("None")
+            self._start()
+
 
     def onExitClick(self, btn):
         exit()
@@ -100,6 +104,14 @@ class MyApp(App):
     def onLoadClick(self, btn):
         MyApp.user = User()
         self.infoLabel.text = MyApp.user.Load()
+        self._start()
+
+    def _start(self):
+        while True:
+            if MyApp.user.checkSetNetwork(self.networkSSID):
+                MyApp.user.sendMessage()
+            else:
+                self.infoLabel.text = "Not Set Network"
 
 
 if __name__ == '__main__':

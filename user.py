@@ -1,5 +1,6 @@
 import smtplib
 from enum import Enum
+import os
 
 carrier = {
         "Verizon" : "@vtext.com",
@@ -11,7 +12,7 @@ carrier = {
         }
 
 class User:
-
+    networkInfo = dict()
     class Data(Enum):
         sender = 0
         password = 1
@@ -66,5 +67,18 @@ class User:
         server.login( self.sender, self.password ) #login
         server.sendmail( self.sender, self.target, self.message )
 
+    def checkNetwork(self): # ghttunbmqppmhqnf
+        os.system("/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I > network.inf")
+        with open("network.inf") as netWorkFile:
+            netowkrInfo = dict(line.strip().split(":", 1) for line in netWorkFile)
+            return str(netowkrInfo["SSID"].strip())
+        return "NA"
+
+    def checkSetNetwork(self, setNetwork):
+        if setNetwork == self.checkNetwork():
+            return True
+        return False
+
+    #test Functions
     def getSender(self):
         return self.sender
