@@ -12,4 +12,6 @@ Upcomming Updates
 Sends Message at a certain time
 Move on to Swift -> Will use Google API Geocode
 
-Clone  
+Steps:
+Clone Repository: https://github.com/Maffinz/MessageIT.git
+Open Terminal and run: kivy main.py

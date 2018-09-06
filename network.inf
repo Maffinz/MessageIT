@@ -1,15 +1,15 @@
-     agrCtlRSSI: -60
+     agrCtlRSSI: -55
      agrExtRSSI: 0
-    agrCtlNoise: -95
+    agrCtlNoise: -89
     agrExtNoise: 0
           state: running
         op mode: station 
-     lastTxRate: 400
-        maxRate: 600
+     lastTxRate: 585
+        maxRate: 1300
 lastAssocStatus: 0
     802.11 auth: open
-      link auth: wpa2
-          BSSID: 84:b8:2:10:55:0
-           SSID: eduroam
-            MCS: 9
-        channel: 40,-1
+      link auth: wpa2-psk
+          BSSID: 60:6d:c7:b5:19:7d
+           SSID: WIFIB51979-5G
+            MCS: 7
+        channel: 149,80
